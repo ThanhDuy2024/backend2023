@@ -84,6 +84,8 @@ block main
                   data-id = item.id 
                   ) Dừng hoạt động
             td
+              button.detail 
+                a(class="detail" href=`${prefixAdmin}/product/detail/${item.id}` style="color: white;") Chi tiết
               button.edit 
                 a(class="edit" href=`${prefixAdmin}/product/edit/${item.id}` style="color: white;") Sửa
               button(class="delete" data-id = item.id delete-button) Xóa

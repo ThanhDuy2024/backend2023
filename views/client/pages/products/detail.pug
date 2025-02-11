@@ -1,0 +1,19 @@
+extends ../../layouts/default.pug
+
+block main 
+    h1(class="" style="margin-left: 200px;") Chi tiết sản phẩm
+
+    div(style="margin-left: 200px;" class="mt-4")
+        if(product.title) 
+            div(class="title mb-4" style="font-size: 24px;") Tiêu đề: #{product.title}
+        if(product.price) 
+            div(class="title mb-4" style="font-size: 24px;") Giá: #{product.newPrice}$
+        if(product.discountPercentage) 
+            div(class="title mb-4" style="font-size: 24px;") Đã giảm giá: #{product.discountPercentage}%
+        if(product.stock) 
+            div(class="title mb-4" style="font-size: 24px;") Số lượng: #{product.stock}
+        if(product.thumbnail) 
+            div(class="title mb-4" style="font-size: 24px;") Ảnh sản phẩm: 
+            img(src=product.thumbnail , alt="" style="width: 250px;")
+        if(product.description) 
+            div(class="title mb-4" style="font-size: 24px;") Mô tả sản phẩm: #{product.description}

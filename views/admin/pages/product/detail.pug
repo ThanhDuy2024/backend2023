@@ -1,0 +1,25 @@
+extends ../../layouts/default.pug
+
+block main 
+    h1 Chi tiết sản phẩm
+
+    div(style="margin-left: 200px;" class="mt-4")
+        if(product.title) 
+            div(class="title mb-4" style="font-size: 24px;") Tiêu đề: #{product.title}
+        if(product.price) 
+            div(class="title mb-4" style="font-size: 24px;") Giá: #{product.price}$
+        if(product.discountPercentage) 
+            div(class="title mb-4" style="font-size: 24px;") Phần trăm giảm giá: #{product.discountPercentage}%
+        if(product.stock) 
+            div(class="title mb-4" style="font-size: 24px;") Số lượng: #{product.stock}
+        if(product.status) 
+            div(class="title mb-4" style="font-size: 24px;") Trạng thái: #{product.status == "active" ? "Đang hoạt động" : "Ngừng hoạt động"}
+        if(product.thumbnail) 
+            div(class="title mb-4" style="font-size: 24px;") Ảnh sản phẩm: 
+            img(src=product.thumbnail , alt="" style="width: 250px;")
+        if(product.description) 
+            div(class="title mb-4" style="font-size: 24px;") Mô tả sản phẩm: #{product.description}
+        br
+        button(class=("btn btn-warning mb-4")) 
+            a(href=`${prefixAdmin}/product/edit/${product.id}` style="color: white;") Chỉnh sửa sản phẩm 
+        

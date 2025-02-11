@@ -99,6 +99,11 @@ button.edit {
   color: white;
 }
 
+button.detail {
+  background-color: blue;
+  color: white;
+}
+
 button.delete {
   background-color: #dc3545;
   color: white;

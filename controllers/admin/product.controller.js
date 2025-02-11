@@ -171,3 +171,15 @@ module.exports.editItem = async (req, res) => {
         res.redirect("back");
     }
 }
+
+module.exports.detail = async (req, res) => {
+    const find = {
+        _id: req.params.id,
+        deleted: false
+    }
+
+    const product = await Product.findOne(find);
+    res.render("admin/pages/product/detail", {
+        product: product
+    });
+}
