@@ -1,0 +1,9 @@
+mixin alertChange(timeSet) 
+    - if (messages.success)
+        .message.info
+            span(class="alert alert-success alert-position" time-value=timeSet) #{messages.success}
+
+mixin alert-error(timeSet) 
+    - if (messages.error)
+        .message.info
+            span(class="alert alert-danger alert-position" time-value=timeSet) #{messages.error}

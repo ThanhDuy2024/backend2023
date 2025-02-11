@@ -1,0 +1,44 @@
+mixin pagination(pagination)
+    nav
+      ul.pagination
+
+        li.page-item
+            button(class=`page-link` button-pagination = 1) Trang đầu
+        if(pagination.page > 1)
+            li.page-item
+              button(class=`page-link` button-pagination = (pagination.page) - 1) Trang trước
+        else 
+            li.page-item
+              button(class=`page-link`) Trang trước 
+        if(pagination.page >= 2)
+          li.page-item
+            button(class=`page-link` button-pagination = 1) 1
+          li.page-item
+            button(class=`page-link`) ...
+
+        if(pagination.page > 3)
+          li.page-item
+            button(class=`page-link` button-pagination = pagination.page - 2) #{pagination.page - 2}
+          li.page-item
+            button(class=`page-link` button-pagination = pagination.page - 1) #{pagination.page - 1}
+        
+        - for(var i = pagination.page; i <= (pagination.page + 2 < pagination.pagination ? pagination + 2 : pagination.pagination); i++)
+            li(class=`page-item ${pagination.page == i ? "active" : ""}` button-pagination=i)
+              button.page-link #{i}
+
+        if(pagination.page < pagination.pagination)
+          li.page-item
+              button(class=`page-link` ) ...
+          li.page-item
+            button(class=`page-link` button-pagination = pagination.pagination) #{pagination.pagination}
+        else if(pagination.page == pagination.pagination)
+          li 
+
+        if(pagination.page < pagination.pagination)
+            li.page-item
+              button(class=`page-link` button-pagination = (pagination.page) + 1) Trang sau
+        else 
+            li.page-item
+              button(class=`page-link`) Trang sau
+        li.page-item
+              button(class=`page-link` button-pagination = pagination.pagination) Trang cuối

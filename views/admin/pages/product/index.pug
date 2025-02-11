@@ -1,0 +1,95 @@
+extends ../../layouts/default.pug
+include ../../mixins/filterButtons.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
+block main 
+
+    +alertChange(3000)
+    +alert-error(3000)
+    h1 Danh sách sản phẩm
+    .cart.mb-3
+      .card-header Bộ lọc và Tìm kiếm
+      
+      .card-body
+        .row.mb-3
+          .col-6
+            +filterButtons(filterButtons)
+          .col-6.mb-3
+            +search(keyword)
+          form(
+            action=`${prefixAdmin}/product/change-multi?_method=PATCH`
+            method="POST"
+            class="form-change-multi"
+          )
+            .d-flex.align-items-start
+                .form-group
+                    select(name="type" class="form-control")
+                        option(disabled selected) -- Hãy chọn hoạt động --  
+                        option(value="active") Hoạt động
+                        option(value="inactive") Dừng hoạt động
+                        option(value="delete-all") Xóa nhiều sản phẩm
+                        option(value="change-position") Thay đổi vị trí
+                .form-group
+                    input(
+                        type="text"
+                        name="ids"
+                        value=""
+                        class="form-control"
+                        style="display: none"
+                    )
+                button(type="submit" class="btn btn-primary") Áp dụng
+          .col-4 
+            a(
+              href=`${prefixAdmin}/product/create`
+              class = "btn btn-outline-success"  
+            ) + Thêm mới
+
+    table(checkbox-mutil)
+      thead
+        tr
+          th 
+            input(type="checkbox", name="checkbox-all")
+          th STT
+          th Hình ảnh
+          th Tiêu đề
+          th Giá
+          th Vị trí
+          th Trạng thái
+          th Hành động
+      tbody
+        each item, index in products
+          tr
+            td 
+              input(type="checkbox", name="checkbox-id" value=item.id)
+            td #{index + 1}
+            td: img(src=item.thumbnail, alt=item.title)
+            td #{item.title}
+            td #{item.price}$
+            td 
+              input(type="number" value=item.position  style="width: 60px" min="1" name="position")
+            td 
+              if(item.status == "active")
+                span(
+                  class = "status-active"
+                  button-change-status 
+                  data-status = item.status
+                  data-id = item.id 
+                  ) Hoạt động
+              else
+                 span(
+                  class = "status-inactive"
+                  button-change-status 
+                  data-status = item.status
+                  data-id = item.id 
+                  ) Dừng hoạt động
+            td
+              button.edit 
+                a(class="edit" href=`${prefixAdmin}/product/edit/${item.id}` style="color: white;") Sửa
+              button(class="delete" data-id = item.id delete-button) Xóa
+
+    +pagination(pagination)
+
+    form(action="", method="POST" path-data=`${prefixAdmin}/product`) 
+    form(action="", method="POST" path-data=`${prefixAdmin}/product/delete` delete-form) 
+    script(src="/admin/js/product.js") 

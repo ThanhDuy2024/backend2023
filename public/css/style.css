@@ -1,0 +1,102 @@
+.header {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.header .inner-logo img {
+    max-height: 50px;
+    max-width: 100%;
+}
+
+.header .inner-menu > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.header .inner-menu > ul > li {
+    margin-left: 20px;
+}
+
+.footer {
+    background-color: #333;
+    text-align: center;
+    color: white;
+}
+
+/* Container styling */
+.container {
+    margin-top: 1rem; /* .my-3 in Bootstrap is 1rem */
+}
+
+/* Box head styling */
+.box-head {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.box-head h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Row styling */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Product item styling */
+.product-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Inner image styling */
+.inner-image img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+/* Inner content styling */
+.inner-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.inner-price-new {
+    color: #28a745;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.inner-price-old {
+    text-decoration: line-through;
+    color: #888;
+    margin-bottom: 0.25rem;
+}
+
+.inner-discount {
+    color: #dc3545;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+
