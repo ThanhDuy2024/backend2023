@@ -120,11 +120,6 @@ module.exports.create = async (req, res) => {
 }
 
 module.exports.createItem = async (req, res) => {
-
-    if(req.file) {
-        req.body.thumbnail = `/uploads/${req.file.filename}`;
-    }
-
     if(req.body.position) {
         const product = new Product(req.body);
         product.save();
@@ -156,11 +151,6 @@ module.exports.edit = async (req, res) => {
 
 //[PATCH] /admin/product/edit/:id
 module.exports.editItem = async (req, res) => {
-    if(req.file) {
-        req.body.thumbnail = `/uploads/${req.file.filename}`;
-    } else {
-        req.body.thumbnail = ""
-    }
     try {
         const id = req.params.id
         await Product.updateOne({_id: id}, req.body);
