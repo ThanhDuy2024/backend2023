@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser');
 const flash = require('express-flash');
@@ -10,13 +11,13 @@ const database = require("./config/database");
 const route = require("./routes/client/index.route");
 const routeAdmin = require("./routes/admin/index.route");
 const adminUrl = require('./config/system');
-
 const port = process.env.PORT;
 const app = express();
 
 app.use(cookieParser('LTD123'));
 app.use(session({ cookie: { maxAge: 3000 }}));
 app.use(flash());
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(methodOverride('_method'));

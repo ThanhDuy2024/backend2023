@@ -5,7 +5,7 @@ block main
 
     +alert-error(3000)
     form(
-        action = `${prefixAdmin}/product/create`
+        action = `${prefixAdmin}/product-category/create`
         id = "form-create-product"
         method = "POST"
         style = "margin-left: 200px"
@@ -16,21 +16,14 @@ block main
             input(type="text" name="title" id="title" class="form-control" style = "width: 70%" required)
 
         div(class="form-group")
+            label(for="parent_id") Mã danh mục cha:
+            input(type="text" name="parent_id" id="parent_id" class="form-control" style = "width: 70%")
+
+        div(class="form-group")
             label(for="description") Mô tả sản phẩm:
             textarea(type="text" name="description" id="description" class="form-control textarea-tiny-mce" rows="4" style = "width: 70%")
         
-        div(class="form-group")
-            label(for="price") Giá sản phẩm:
-            input(type="number" name="price" id="price" class="form-control" style = "width: 70%" value=0 min=0)
 
-        div(class="form-group")
-            label(for="discountPercentage") % giảm giá:
-            input(type="number" name="discountPercentage" id="discountPercentage" class="form-control" style = "width: 70%" value=0 min=0)
-        
-        div(class="form-group")
-            label(for="stock") Số lượng:
-            input(type="number" name="stock" id="stock" class="form-control" style = "width: 70%" value=1 min = 1)
-        
         div(class="form-group create-upload-image" create-upload-image)
             label(for="thumbnail") Hình ảnh:
             input(

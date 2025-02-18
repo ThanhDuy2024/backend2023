@@ -25,14 +25,6 @@ module.exports.index = async (req, res) => {
 
     //pagination
     const countProduct = await Product.countDocuments(find);
-    // let objectPagination = objectPaginationHelper(
-    //     {
-    //         page: 1,
-    //         limit: 4
-    //     },
-    //     req.query,
-    //     countProduct
-    // )
 
     const pagination = {
         page: 1,
@@ -45,8 +37,18 @@ module.exports.index = async (req, res) => {
        countProduct
     )
 
+    //sort
+    const sortItem = {}
+    if(req.query.sortKey && req.query.sortMethod) {
+        sortItem[req.query.sortKey] = req.query.sortMethod;
+    } else {
+        sortItem.position = "desc";
+    }
     //limit/skip
-    const products = await Product.find(find).sort({position: "desc"}).limit(objectPagination.limit).skip(objectPagination.skip);
+    const products = await Product.find(find)
+                    .sort(sortItem)
+                    .limit(objectPagination.limit)
+                    .skip(objectPagination.skip);
    
     res.render("admin/pages/product/index", {
         pageTitle: "Dashboard page",
@@ -120,15 +122,15 @@ module.exports.create = async (req, res) => {
 }
 
 module.exports.createItem = async (req, res) => {
-    if(req.body.position) {
-        const product = new Product(req.body);
-        product.save();
-    } else {
+    if(req.body.position =="") {
         const countProduct = await Product.countDocuments();
         req.body.position = countProduct + 1;
-        const product = new Product(req.body);
-        product.save();
+    } else {
+       req.body.position = parseInt(req.body.position);
     }
+
+    const product = new Product(req.body);
+    await product.save();
     req.flash('success', `Sản phẩm đã được thêm`);
     res.redirect(`${prefixAdmin.prefixAdmin}/product`);
 }
