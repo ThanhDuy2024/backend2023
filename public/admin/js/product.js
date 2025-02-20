@@ -98,7 +98,6 @@ if (buttonDeletes.length > 0) {
             if (isConfirm) {
                 const id = item.getAttribute("data-id");
                 deleteFrom.action = path + `/${id}?_method=DELETE`
-                console.log(deleteFrom.action);
                 deleteFrom.submit();
             }
         })

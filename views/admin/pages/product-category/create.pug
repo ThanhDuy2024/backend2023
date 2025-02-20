@@ -1,5 +1,6 @@
 extends ../../layouts/default.pug
 include ../../mixins/alert.pug
+include ../../mixins/create-tree.pug
 block main  
     h1.mb-4 Tạo mới sản phẩm
 
@@ -17,7 +18,10 @@ block main
 
         div(class="form-group")
             label(for="parent_id") Mã danh mục cha:
-            input(type="text" name="parent_id" id="parent_id" class="form-control" style = "width: 70%")
+            select(name="parent_id" class="form-control" style = "width: 70%")
+                option(value="" default) -- Chọn danh mục --   
+                if(productCategory)
+                    +create-tree(productCategory)
 
         div(class="form-group")
             label(for="description") Mô tả sản phẩm:

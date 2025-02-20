@@ -1,0 +1,37 @@
+mixin index-tree(items, level = 0) 
+    each item, index in items
+        - const prefix = Array(level + 1).join("-- ");
+        tr
+            td 
+                input(type="checkbox", name="checkbox-id", value=item.id)
+            td #{index + 1}
+            td: img(src=item.thumbnail, alt=item.title)
+            td #{prefix}#{item.title}
+            td 
+                input(type="number", value=item.position, style="width: 60px", min="1", name="position")
+            td 
+                if item.status == "active"
+                    span.status-active(
+                        button-change-status 
+                        data-status=item.status 
+                        data-id=item.id
+                    ) Hoạt động
+                else
+                    span.status-inactive(
+                        button-change-status 
+                        data-status=item.status 
+                        data-id=item.id
+                    ) Dừng hoạt động
+            td
+                button.detail 
+                    a.detail(href=`${prefixAdmin}/product/detail/${item.id}`, style="color: white;") Chi tiết
+                button.edit 
+                    a.edit(href=`${prefixAdmin}/product/edit/${item.id}`, style="color: white;") Sửa
+                button.delete(
+                    data-id=item.id 
+                    delete-button
+                ) Xóa
+        if(item.children && item.children.length > 0)
+            +index-tree(item.children, level + 1) 
+
+        
