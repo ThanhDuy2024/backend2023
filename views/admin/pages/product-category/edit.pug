@@ -3,7 +3,7 @@ include ../../mixins/alert.pug
 include ../../mixins/create-tree.pug
 block main  
     h1.mb-4 Chỉnh sửa danh mục sản phẩm
-
+    +alertChange(3000)
     +alert-error(3000)
     form(
         action = `${prefixAdmin}/product-category/edit/${category.id}?_method=PATCH`
@@ -53,7 +53,7 @@ block main
         
         div(class="form-group" style="display: flex")
             div(style="display: flex; align-items: center; margin-right: 10px;")
-                input(type="radio" name="status" id="active" style="margin-right: 10px; width: 20px; height: 20px;" checked = category.status == "active" ? true : false)
+                input(type="radio" name="status" id="active" style="margin-right: 10px; width: 20px; height: 20px;" value="active" checked = category.status == "active" ? true : false)
                 lable(for="active" class="") Đang hoạt động
             div(style="display: flex; align-items: center;")
                 input(type="radio" name="status" id="inactive" style="margin-right: 10px; width: 20px; height: 20px;" value="inactive" checked = category.status == "inactive" ? true : false)

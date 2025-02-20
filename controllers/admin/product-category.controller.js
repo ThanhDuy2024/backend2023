@@ -79,7 +79,6 @@ module.exports.edit = async (req, res) => {
 module.exports.editItem = async (req, res) => {
     const id = req.params.id;
     const body = req.body;
-
     try {
         await ProductCategory.updateOne({_id: id}, body);
         req.flash('success', 'Sửa sản phẩm thành công');
