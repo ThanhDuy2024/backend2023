@@ -59,3 +59,33 @@ module.exports.createItem = async (req, res) => {
         console.log(error);
     }
 }
+
+module.exports.edit = async (req, res) => {
+    const id = req.params.id;
+    const category = await ProductCategory.findOne({_id: id});
+
+    const find = {
+        deleted: false
+    }
+    const tree = createTree.tree
+    const productCategory = await ProductCategory.find(find);
+    const newProductCategory = tree(productCategory);
+    res.render("admin/pages/product-category/edit",{
+        category: category,
+        productCategory: newProductCategory
+    });
+}
+
+module.exports.editItem = async (req, res) => {
+    const id = req.params.id;
+    const body = req.body;
+
+    try {
+        await ProductCategory.updateOne({_id: id}, body);
+        req.flash('success', 'Sửa sản phẩm thành công');
+        res.redirect(`${adminURL.prefixAdmin}/product-category`);
+    } catch (error) {
+        req.flash('error', 'Sửa sản phẩm thất bại');
+        res.redirect("back");
+    }
+}

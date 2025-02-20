@@ -14,4 +14,8 @@ route.get("/", controller.index);
 route.get("/create", controller.create);
 
 route.post("/create", upload.single("thumbnail"), cloud.cloud, validate.createItem ,controller.createItem);
+
+route.get("/edit/:id", controller.edit);
+
+route.patch("/edit/:id", upload.single("thumbnail"), cloud.cloud, validate.createItem, controller.editItem);
 module.exports = route;

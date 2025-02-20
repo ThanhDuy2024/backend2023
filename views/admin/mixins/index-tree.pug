@@ -26,7 +26,7 @@ mixin index-tree(items, level = 0)
                 button.detail 
                     a.detail(href=`${prefixAdmin}/product/detail/${item.id}`, style="color: white;") Chi tiết
                 button.edit 
-                    a.edit(href=`${prefixAdmin}/product/edit/${item.id}`, style="color: white;") Sửa
+                    a.edit(href=`${prefixAdmin}/product-category/edit/${item.id}`, style="color: white;") Sửa
                 button.delete(
                     data-id=item.id 
                     delete-button

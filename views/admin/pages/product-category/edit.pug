@@ -1,0 +1,62 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/create-tree.pug
+block main  
+    h1.mb-4 Chỉnh sửa danh mục sản phẩm
+
+    +alert-error(3000)
+    form(
+        action = `${prefixAdmin}/product-category/edit/${category.id}?_method=PATCH`
+        id = "form-create-product"
+        method = "POST"
+        style = "margin-left: 200px"
+        enctype="multipart/form-data"
+    )
+        div(class="form-group")
+            label(for="title") Tên sản phẩm:
+            input(type="text" name="title" id="title" class="form-control" style = "width: 70%" required value=category.title)
+
+        div(class="form-group")
+            label(for="parent_id") Mã danh mục cha:
+            select(name="parent_id" class="form-control" style = "width: 70%")
+                option(value="" default) -- Danh mục cao nhất --   
+                if(productCategory)
+                    +create-tree(productCategory, 0, category.parent_id)
+
+        div(class="form-group")
+            label(for="description") Mô tả sản phẩm:
+            textarea(type="text" name="description" id="description" class="form-control textarea-tiny-mce" rows="4" style = "width: 70%") #{category.description}
+        
+
+        div(class="form-group create-upload-image" create-upload-image)
+            label(for="thumbnail") Hình ảnh:
+            input(
+                type="file" 
+                name="thumbnail" 
+                id="thumbnail" 
+                class="form-control-file" 
+                acceopt = "image/*" 
+                style = "width: 70%; cursor: pointer;"
+                input-upload-image
+            )
+            img(
+                src= category.thumbnail
+                input-upload-preview
+                class = "preview"
+            )
+            button(class="button-preview" button-preview type="") x
+
+        
+        div(class="form-group")
+            label(for="position") Vị trí:
+            input(type="number" name="position" id="position" class="form-control" style = "width: 70%" placeholder = "Tự động tăng" value=category.position)
+        
+        div(class="form-group" style="display: flex")
+            div(style="display: flex; align-items: center; margin-right: 10px;")
+                input(type="radio" name="status" id="active" style="margin-right: 10px; width: 20px; height: 20px;" checked = category.status == "active" ? true : false)
+                lable(for="active" class="") Đang hoạt động
+            div(style="display: flex; align-items: center;")
+                input(type="radio" name="status" id="inactive" style="margin-right: 10px; width: 20px; height: 20px;" value="inactive" checked = category.status == "inactive" ? true : false)
+                lable(for="inactive" class="") Dừng hoạt động
+        button(class="btn btn-primary" style="margin-bottom: 20px;") Áp dụng
+    script(src="/admin/js/product.js") 
