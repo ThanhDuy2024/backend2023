@@ -4,7 +4,8 @@ mongoose.plugin(slug);
 const productSchema = new mongoose.Schema(
     {
         title: String,
-        category_parent_id: {
+        category_parent_id: String,
+        categoryTitle: {
             type: String,
             default: ""
         },

@@ -179,9 +179,12 @@ module.exports.detail = async (req, res) => {
         _id: req.params.id,
         deleted: false
     }
-
     const product = await Product.findOne(find);
+    const productCategory = await ProductCategory.findOne({_id: product.category_parent_id});
+    if(productCategory) {
+        product.categoryTitle = productCategory.title;
+    }
     res.render("admin/pages/product/detail", {
-        product: product
+        product: product,
     });
 }

@@ -6,6 +6,10 @@ block main
     div(style="margin-left: 200px;" class="mt-4")
         if(product.title) 
             div(class="title mb-4" style="font-size: 24px;") Tiêu đề: #{product.title}
+        if(product.category_parent_id) 
+            div(class="title mb-4" style="font-size: 24px;") Danh mục cha: #{product.categoryTitle}
+        else 
+            div(class="title mb-4" style="font-size: 24px;") Danh mục cha: Không có
         if(product.price) 
             div(class="title mb-4" style="font-size: 24px;") Giá: #{product.price}$
         if(product.discountPercentage) 
