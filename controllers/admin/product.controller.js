@@ -1,8 +1,10 @@
 const Product = require("../../models/product.model");
+const ProductCategory = require("../../models/product.category.model");
 const filterButtonsHelper = require("../../helpers/filterButtons");
 const objectSearch = require("../../helpers/search");
 const objectPaginationHelper = require("../../helpers/pagination");
 const prefixAdmin = require("../../config/system");
+const createTree = require("../../helpers/createTree");
 //[GET] /admin/products
 module.exports.index = async (req, res) => {
    
@@ -118,7 +120,12 @@ module.exports.deleteItem = async (req, res) => {
 }
 
 module.exports.create = async (req, res) => {
-    res.render(`admin/pages/product/create`)
+    const productCategory = await ProductCategory.find({deleted: false});
+    const tree = createTree.tree(productCategory);
+
+    res.render(`admin/pages/product/create`, {
+        productCategory: tree
+    })
 }
 
 module.exports.createItem = async (req, res) => {
@@ -142,8 +149,11 @@ module.exports.edit = async (req, res) => {
     }
     try {
         const product = await Product.findOne(find);
+        const productCategory = await ProductCategory.find({deleted: false});
+        const tree = createTree.tree(productCategory);
         res.render(`admin/pages/product/edit`, {
-            products: product
+            products: product,
+            productCategory: tree
         }) 
     } catch (error) {
         req.flash("error", "Không tìm thấy sản phẩm");

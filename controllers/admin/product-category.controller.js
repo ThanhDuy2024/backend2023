@@ -82,7 +82,7 @@ module.exports.editItem = async (req, res) => {
     try {
         await ProductCategory.updateOne({_id: id}, body);
         req.flash('success', 'Sửa sản phẩm thành công');
-        res.redirect(`${adminURL.prefixAdmin}/product-category`);
+        res.redirect(`back`);
     } catch (error) {
         req.flash('error', 'Sửa sản phẩm thất bại');
         res.redirect("back");
