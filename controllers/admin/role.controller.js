@@ -60,3 +60,16 @@ module.exports.editItem = async (req, res) => {
         res.status(404).send("Not found");
     }
 }
+
+//[GET] /admin/roles/detail
+module.exports.detail = async (req, res) => {
+    const find = {
+        _id: req.params.id,
+        deleted: false
+    }
+
+    const role = await Role.findOne(find);
+    res.render("admin/pages/roles/detail", {
+        role: role
+    });
+}

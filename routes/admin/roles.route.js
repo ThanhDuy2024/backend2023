@@ -10,4 +10,5 @@ route.post("/create", controller.createItem)
 route.get("/edit/:id", controller.edit);
 route.patch("/edit/:id", controller.editItem);
 
+route.get("/detail/:id", controller.detail);
 module.exports = route
