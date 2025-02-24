@@ -1,0 +1,22 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/create-tree.pug
+block main  
+    h1.mb-4 Tạo mới sản phẩm
+
+    +alert-error(3000)
+    form(
+        action = `${prefixAdmin}/roles/edit/${role.id}?_method=PATCH`
+        method = "POST"
+        style = "margin-left: 200px"
+    )
+        div(class="form-group")
+            label(for="title") Tên nhóm quyền:
+            input(type="text" name="title" id="title" class="form-control" style = "width: 70%" value= role.title required)
+
+        div(class="form-group")
+            label(for="description") Mô tả:
+            textarea(type="text" name="description" id="description" class="form-control textarea-tiny-mce" rows="4" style = "width: 70%") !{role.description}  
+        
+        button(class="btn btn-primary" style="margin-bottom: 20px;") Áp dụng
+    script(src="/admin/js/product.js") 

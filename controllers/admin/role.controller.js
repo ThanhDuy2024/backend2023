@@ -26,3 +26,37 @@ module.exports.createItem = async (req, res) => {
         console.log(error);
     }
 }
+
+//[GET] /admin/roles/edit/:id
+module.exports.edit = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const find = {
+            _id: id,
+            deleted: false
+        }
+        const role = await Role.findOne(find);
+    
+        res.render("admin/pages/roles/edit", {
+            role: role
+        });
+    } catch (error) {
+        res.status(404).send("Not found");
+    }
+}
+
+//[PATCH] /admin/roles/edit/:id
+module.exports.editItem = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const find = {
+            _id: id,
+            deleted: false
+        }
+        const update = req.body;
+        await Role.findOneAndUpdate(find, update);
+        res.redirect(`${prefixAdmin.prefixAdmin}/roles`);
+    } catch (error) {
+        res.status(404).send("Not found");
+    }
+}
