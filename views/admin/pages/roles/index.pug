@@ -3,7 +3,7 @@ extends ../../layouts/default.pug
 block main 
     h1 Danh sách sản phẩm
     .cart.mb-3
-      .card-header Danh sách nhóm quyền
+      .card-header.text-bold Danh sách nhóm quyền
           .col-4.mt-4
             a(
               href=`${prefixAdmin}/roles/create`
@@ -37,5 +37,5 @@ block main
     //- +pagination(pagination)
 
     //- form(action="", method="POST" path-data=`${prefixAdmin}/product`) 
-    //- form(action="", method="POST" path-data=`${prefixAdmin}/product/delete` delete-form) 
-    script(src="/admin/js/product.js") 
+    form(action="", method="POST" path-data=`${prefixAdmin}/roles/delete` delete-form) 
+    script(src="/admin/js/roles.js")

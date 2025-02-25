@@ -73,3 +73,21 @@ module.exports.detail = async (req, res) => {
         role: role
     });
 }
+
+//[DELETE] /admin/roles/delete/:id
+module.exports.delete = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const find = {
+            _id: id,
+            deleted: false
+        }
+        const update = {
+            deleted: true
+        }
+        await Role.findOneAndUpdate(find, update);
+        res.redirect(`${prefixAdmin.prefixAdmin}/roles`);
+    } catch (error) {
+        res.status(404).send("Not found");
+    }
+}
