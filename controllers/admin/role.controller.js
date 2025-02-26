@@ -91,3 +91,35 @@ module.exports.delete = async (req, res) => {
         res.status(404).send("Not found");
     }
 }
+
+//[GET] /admin/roles/permissions
+module.exports.permission = async (req, res) => {
+    const find = {
+        deleted: false
+    }
+    const roles = await Role.find(find);
+    res.render("admin/pages/roles/permissions", {
+        roles: roles
+    });
+}
+
+//[PATCH] /admin/roles/permissions
+module.exports.permissionItem = async (req, res) => {
+    try {
+        const permission = JSON.parse(req.body.permissions);
+        for(const item of permission) {
+            const find = {
+                _id: item.id,
+                deleted: false
+            }
+            const update = {
+                permissions: item.permissions
+            }
+            await Role.findOneAndUpdate(find, update);
+        }
+        res.redirect(`${prefixAdmin.prefixAdmin}/roles/permissions`);
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
