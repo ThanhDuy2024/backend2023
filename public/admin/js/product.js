@@ -105,13 +105,7 @@ if (buttonDeletes.length > 0) {
 }
 
 //alert
-const alertChange = document.querySelector(".alert-position");
-if (alertChange) {
-    const timeSet = alertChange.getAttribute("time-value");
-    setTimeout(() => {
-        alertChange.classList.add("alert-hidden");
-    }, parseInt(timeSet))
-}
+
 
 //Preview images
 const createUpload = document.querySelector("[create-upload-image]");

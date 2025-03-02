@@ -7,18 +7,24 @@ module.exports.index = async (req, res) => {
     const find = {
         deleted: false,
     }
-    const account = await Account.find(find).select("-password -token").exec();
-    const role = await Role.find(find);
-    for(const item in role) {
-        for(const i in account) {
-            if(account[i].role_id == role[item]._id) {
-                account[i].role = role[item].title;
-            }
-        }
+    if(req.query.keyword) {
+        const regex = new RegExp(req.query.keyword, "i");
+        find.fullName = regex
     }
+    const account = await Account.find(find).select("-password -token").exec();
+
+    for(const item in account) {
+        const role = await Role.findOne({_id: account[item].role_id});
+        account[item].role_title = role.title
+    }
+    // const role = await Role.find();
+
+
+    // console.log(account);
     res.render("admin/pages/account/index", {
         accounts: account,
-        role: role,
+        // role: role,
+        keyword: req.query.keyword
     });
 }
 
@@ -51,6 +57,38 @@ module.exports.createItem = async (req, res) => {
             req.flash("success", "Create account successfully");
             res.redirect(`${prefix.prefixAdmin}/accounts`);
         }
+    } catch (error) {
+        res.send("Error: " + error);
+    }
+}
+
+//[PATCH] /admin/account/delete/:id
+module.exports.deleteItem = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const update = {
+            deleted: true,
+        }
+        await Account.updateOne({ _id: id }, update);
+        req.flash("success", "Delete account successfully");
+        res.redirect(`${prefix.prefixAdmin}/accounts`);
+    } catch (error) {   
+        res.send("Error: " + error)
+    }
+}
+
+//[PATCH] /admin/account/change-status/:id/:status
+
+module.exports.changeStatus = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const status = req.params.status;
+        const update = {
+            status: status,
+        }
+        await Account.updateOne({_id: id}, update);
+        req.flash("success", "Change status account successfully");
+        res.redirect(`${prefix.prefixAdmin}/accounts`);
     } catch (error) {
         res.send("Error: " + error);
     }

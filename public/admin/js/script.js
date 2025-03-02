@@ -51,3 +51,12 @@ if(pagination) {
     })
 }
 //end pagination
+
+//alert
+const alertChange = document.querySelector(".alert-position");
+if (alertChange) {
+    const timeSet = alertChange.getAttribute("time-value");
+    setTimeout(() => {
+        alertChange.classList.add("alert-hidden");
+    }, parseInt(timeSet))
+}

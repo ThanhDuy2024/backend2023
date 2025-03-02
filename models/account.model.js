@@ -7,6 +7,7 @@ const AccountSchema = new Schema({
     password: String,
     avatar: String,
     role_id: String,
+    role_title: String,
     status: String,
     token: String,
     phone: Number,

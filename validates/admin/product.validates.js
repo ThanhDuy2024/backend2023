@@ -1,4 +1,3 @@
-const Account = require("../../models/account.model");
 module.exports.createItem = (req, res, next) => {
     if (!req.body.title) {
         req.flash("error", "Vui lòng nhập tên sản phẩm!");
