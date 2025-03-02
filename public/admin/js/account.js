@@ -45,3 +45,36 @@ if(formSearch) {
         }
     })
 }
+
+const createUpload = document.querySelector("[create-upload-image]");
+if (createUpload) {
+    const uploadImage = document.querySelector("[input-upload-image]");
+    const preview = document.querySelector("[input-upload-preview]");
+    const buttonPreview = document.querySelector("[button-preview]");
+    if (preview.src) {
+        buttonPreview.classList.add("show");
+    }
+    uploadImage.addEventListener("change", (e) => {
+        //e.preventDefault();
+        const file = e.target.files[0];
+        if (file) {
+            buttonPreview.classList.add("show");
+            preview.src = URL.createObjectURL(file);
+        }
+    })
+
+    buttonPreview.addEventListener("click", (e) => {
+        e.preventDefault();
+        uploadImage.value = "";
+        preview.src = "";
+        buttonPreview.classList.remove("show");
+    })
+}
+
+const alertChange = document.querySelector(".alert-position");
+if (alertChange) {
+    const timeSet = alertChange.getAttribute("time-value");
+    setTimeout(() => {
+        alertChange.classList.add("alert-hidden");
+    }, parseInt(timeSet))
+}

@@ -3,6 +3,7 @@ const Role = require("../../models/role.model");
 const Account = require("../../models/account.model");
 const randomToken = require('../../helpers/generateString');
 const prefix = require('../../config/system');
+const { accounts } = require('../../validates/admin/product.validates');
 module.exports.index = async (req, res) => {
     const find = {
         deleted: false,
@@ -92,4 +93,43 @@ module.exports.changeStatus = async (req, res) => {
     } catch (error) {
         res.send("Error: " + error);
     }
+}
+
+//[GET] /admin/accounts/edit/:id
+
+module.exports.edit =  async (req, res) => {
+    const id = req.params.id
+    const find = {
+        deleted: false
+    }
+    const account = await Account.findOne( { _id: id }, { deleted: false } ).select("-password");
+    const role = await Role.find(find);
+    res.render("admin/pages/account/edit", {
+        account: account,
+        role: role
+    });
+}
+
+//[PATCH] /admin/accouts/edit/:id
+module.exports.editItem = async (req, res) => {
+    const id = req.params.id;
+    const emailExits = await Account.findOne({
+        _id: {$ne: id}, // $ne = not equal
+        email: req.body.email
+    })
+
+    if(emailExits) {
+        req.flash("error", "Email has exited")
+        res.redirect("back")
+        return;
+    } else {
+        if(!req.body.password) {
+            delete req.body.password;
+        } else {
+            req.body.password = md5(req.body.password);
+        }
+        await Account.updateOne({_id: id}, req.body);
+        req.flash("success", "Update has completed");
+    }
+    res.redirect("back");
 }

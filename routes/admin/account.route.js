@@ -17,4 +17,7 @@ router.post("/create", upload.single("avatar"), cloud.cloud, validate.accounts, 
 router.delete("/delete/:id", controller.deleteItem);
 
 router.patch("/change-status/:id/:status", controller.changeStatus);
+
+router.get("/edit/:id", controller.edit);
+router.patch("/edit/:id", upload.single("avatar"), cloud.cloud, validate.accountsEdit, controller.editItem);
 module.exports = router;
