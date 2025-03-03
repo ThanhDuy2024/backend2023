@@ -1,4 +1,6 @@
 extends ../../layouts/default.pug
-
+include ../../mixins/alert.pug
 block main 
     h1 trang tong quan
+    +alertChange(3000)
+    script(src="/admin/js/script.js") 

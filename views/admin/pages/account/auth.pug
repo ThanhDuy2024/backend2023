@@ -1,0 +1,21 @@
+extends ../../layouts/login.pug
+include ../../mixins/alert.pug
+block main 
+    h1.mt-4 Trang đăng nhập 
+    +alert-error(3000)
+    +alertChange(3000)
+    form(
+        action = `${prefixAdmin}/auth/login`
+        method = "POST"
+        style = "margin-left: 200px"
+    )
+        div(class="form-group")
+            label(for="email") Email:
+            input(type="email" name="email" id="email" class="form-control" style = "width: 70%" required)
+
+        div(class="form-group")
+            label(for="description") Mật Khẩu:
+            input(type="password" name="password" id="password" class="form-control" style = "width: 70%" required)
+
+        button(class="btn btn-primary form-control" style="margin-bottom: 20px; width: 70%") Đăng nhập
+    script(src="/admin/js/script.js") 
