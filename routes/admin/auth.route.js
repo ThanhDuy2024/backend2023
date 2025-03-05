@@ -4,5 +4,6 @@ const controller = require("../../controllers/admin/auth.controller");
 // const validate = require("../../validates/admin/")
 router.get("/login", controller.login);
 router.post("/login", controller.loginItem)
+router.get("/logout", controller.logout);
 module.exports = router;
 
