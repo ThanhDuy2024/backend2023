@@ -25,12 +25,14 @@ mixin index-tree(items, level = 0)
             td
                 button.detail 
                     a.detail(href=`${prefixAdmin}/product/detail/${item.id}`, style="color: white;") Chi tiết
-                button.edit 
-                    a.edit(href=`${prefixAdmin}/product-category/edit/${item.id}`, style="color: white;") Sửa
-                button.delete(
-                    data-id=item.id 
-                    delete-button
-                ) Xóa
+                if(role.permissions.includes("product-category_edit"))
+                    button.edit 
+                        a.edit(href=`${prefixAdmin}/product-category/edit/${item.id}`, style="color: white;") Sửa
+                if(role.permissions.includes("product-category_delete"))
+                    button.delete(
+                        data-id=item.id 
+                        delete-button
+                    ) Xóa
         if(item.children && item.children.length > 0)
             +index-tree(item.children, level + 1) 
 

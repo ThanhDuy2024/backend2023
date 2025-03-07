@@ -1,41 +1,48 @@
 extends ../../layouts/default.pug
 
 block main 
-    h1 Danh sách sản phẩm
-    .cart.mb-3
-      .card-header.text-bold Danh sách nhóm quyền
-          .col-4.mt-4
-            a(
-              href=`${prefixAdmin}/roles/create`
-              class = "btn btn-outline-success"  
-            ) + Thêm mới
+    if(role.permissions.includes("roles_view"))
+      h1 Danh sách nhóm quyền 
+      .cart.mb-3
+        .card-header.text-bold Danh sách nhóm quyền
+            .col-4.mt-4
+              if(role.permissions.includes("roles_create"))
+                a(
+                  href=`${prefixAdmin}/roles/create`
+                  class = "btn btn-outline-success"  
+                ) + Thêm mới
 
-    table(checkbox-mutil)
-      thead
-        tr
-          th 
-            input(type="checkbox", name="checkbox-all")
-          th STT
-          th Tiêu đề
-          th Mô tả
-          th Hành động
-      tbody
-        each item, index in roles
+      table(checkbox-mutil)
+        thead
           tr
-            td 
-              input(type="checkbox", name="checkbox-id" value=item.id)
-            td #{index + 1}
-            td #{item.title}
-            td(style="padding-top: 20px;") !{item.description}
-            td
-              button.detail 
-                a(class="detail" href=`${prefixAdmin}/roles/detail/${item.id}` style="color: white;") Chi tiết
-              button.edit 
-                a(class="edit" href=`${prefixAdmin}/roles/edit/${item.id}` style="color: white;") Sửa
-              button(class="delete" data-id = item.id delete-button) Xóa
+            th 
+              input(type="checkbox", name="checkbox-all")
+            th STT
+            th Tiêu đề
+            th Mô tả
+            th Hành động
+        tbody
+          each item, index in roles
+            tr
+              td 
+                input(type="checkbox", name="checkbox-id" value=item.id)
+              td #{index + 1}
+              td #{item.title}
+              td(style="padding-top: 20px;") !{item.description}
+              td
+                if(role.permissions.includes("roles_edit"))
+                  button.detail 
+                    a(class="detail" href=`${prefixAdmin}/roles/detail/${item.id}` style="color: white;") Chi tiết
+                else 
+                  button(class="delete" delete-button) Không có quyền 
+                if(role.permissions.includes("roles_edit"))
+                  button.edit 
+                    a(class="edit" href=`${prefixAdmin}/roles/edit/${item.id}` style="color: white;") Sửa
+                if(role.permissions.includes("roles_delete"))
+                  button(class="delete" data-id = item.id delete-button) Xóa
 
-    //- +pagination(pagination)
+      //- +pagination(pagination)
 
-    //- form(action="", method="POST" path-data=`${prefixAdmin}/product`) 
-    form(action="", method="POST" path-data=`${prefixAdmin}/roles/delete` delete-form) 
-    script(src="/admin/js/roles.js")
+      //- form(action="", method="POST" path-data=`${prefixAdmin}/product`) 
+      form(action="", method="POST" path-data=`${prefixAdmin}/roles/delete` delete-form) 
+      script(src="/admin/js/roles.js")

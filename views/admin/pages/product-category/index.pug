@@ -6,70 +6,70 @@ include ../../mixins/alert.pug
 include ../../mixins/index-tree.pug
 block main 
 
-    //- +alertChange(3000)
-    //- +alert-error(3000)
-    h1 Danh mục sản phẩm 
-    .cart.mb-3
-      .card-header Bộ lọc và Tìm kiếm
-      
-      .card-body
-        .row.mb-3
-          .col-6
-            //- +filterButtons(filterButtons)
-            .col-6.d-flex.align-items-start.mb-4.mt-4
-              div(sort style="display: flex; align-items: center") 
-                select(name="type" class="form-control")
-                  option(disabled selected) -- Sắp xếp sản phẩm --  
-                  option(value="price-desc") Giá giảm dần 
-                  option(value="price-asc") Giá tăng dần 
-                  option(value="title-asc") Từ A-Z 
-                  option(value="title-desc") Từ Z-A 
-              button(class="btn btn-primary" style="height: 38px; margin-left: 5px; font-size: 18px" button-clear) Clear
-          .col-6.mb-3
-            +search(keyword)
-          form(
-            action=`${prefixAdmin}/product/change-multi?_method=PATCH`
-            method="POST"
-            class="form-change-multi"
-          )
-            .d-flex.align-items-start
-                .form-group
+      if(role.permissions.includes("product-category_view"))    
+        h1 Danh mục sản phẩm 
+        .cart.mb-3
+          .card-header Bộ lọc và Tìm kiếm
+          
+          .card-body
+            .row.mb-3
+              .col-6
+                //- +filterButtons(filterButtons)
+                .col-6.d-flex.align-items-start.mb-4.mt-4
+                  div(sort style="display: flex; align-items: center") 
                     select(name="type" class="form-control")
-                        option(disabled selected) -- Hãy chọn hoạt động --  
-                        option(value="active") Hoạt động
-                        option(value="inactive") Dừng hoạt động
-                        option(value="delete-all") Xóa nhiều sản phẩm
-                        option(value="change-position") Thay đổi vị trí
-                .form-group
-                    input(
-                        type="text"
-                        name="ids"
-                        value=""
-                        class="form-control"
-                        style="display: none"
-                    )
-                button(type="submit" class="btn btn-primary") Áp dụng
-          .col-4 
-            a(
-              href=`${prefixAdmin}/product-category/create`
-              class = "btn btn-outline-success"  
-            ) + Thêm mới danh mục
+                      option(disabled selected) -- Sắp xếp sản phẩm --  
+                      option(value="price-desc") Giá giảm dần 
+                      option(value="price-asc") Giá tăng dần 
+                      option(value="title-asc") Từ A-Z 
+                      option(value="title-desc") Từ Z-A 
+                  button(class="btn btn-primary" style="height: 38px; margin-left: 5px; font-size: 18px" button-clear) Clear
+              .col-6.mb-3
+                +search(keyword)
+              form(
+                action=`${prefixAdmin}/product/change-multi?_method=PATCH`
+                method="POST"
+                class="form-change-multi"
+              )
+                .d-flex.align-items-start
+                    .form-group
+                        select(name="type" class="form-control")
+                            option(disabled selected) -- Hãy chọn hoạt động --  
+                            option(value="active") Hoạt động
+                            option(value="inactive") Dừng hoạt động
+                            option(value="delete-all") Xóa nhiều sản phẩm
+                            option(value="change-position") Thay đổi vị trí
+                    .form-group
+                        input(
+                            type="text"
+                            name="ids"
+                            value=""
+                            class="form-control"
+                            style="display: none"
+                        )
+                    button(type="submit" class="btn btn-primary") Áp dụng
+              .col-4
+                if(role.permissions.includes("product-category_create")) 
+                  a(
+                    href=`${prefixAdmin}/product-category/create`
+                    class = "btn btn-outline-success"  
+                  ) + Thêm mới danh mục
 
-    table(checkbox-mutil)
-      thead
-        tr
-          th 
-            input(type="checkbox", name="checkbox-all")
-          th STT
-          th Hình ảnh
-          th Tiêu đề
-          th Vị trí
-          th Trạng thái
-          th Hành động
-      tbody
-        +index-tree(productCategory)
-    //- +pagination(pagination)
+        table(checkbox-mutil)
+          thead
+            tr
+              th 
+                input(type="checkbox", name="checkbox-all")
+              th STT
+              th Hình ảnh
+              th Tiêu đề
+              th Vị trí
+              th Trạng thái
+              th Hành động
+          tbody
+            +index-tree(productCategory)
+        //- +pagination(pagination)
 
-    //- form(action="", method="POST" path-data=`${prefixAdmin}/product`) 
-    //- form(action="", method="POST" path-data=`${prefixAdmin}/product/delete` delete-form) 
-    script(src="/admin/js/product.js") 
+        //- form(action="", method="POST" path-data=`${prefixAdmin}/product`) 
+        //- form(action="", method="POST" path-data=`${prefixAdmin}/product/delete` delete-form) 
+        script(src="/admin/js/product.js") 

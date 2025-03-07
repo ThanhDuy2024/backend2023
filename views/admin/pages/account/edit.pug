@@ -1,67 +1,66 @@
-extends ../../layouts/default.pug
+extends ../../layouts/default2.pug
 include ../../mixins/alert.pug
 include ../../mixins/create-tree.pug
 block main  
-    h1.mb-4 Tạo mới sản phẩm
+        h1.mb-4 Tạo mới sản phẩm
+        +alert-error(3000)
+        +alertChange(3000)
+        form(
+            action = `${prefixAdmin}/accounts/edit/${account.id}?_method=PATCH`
+            id = "form-create-product"
+            method = "POST"
+            style = "margin-left: 200px"
+            enctype="multipart/form-data"
+        )
+            div(class="form-group")
+                label(for="fullName") Họ và tên:
+                input(type="text" name="fullName" id="fullName" class="form-control" style = "width: 70%" required value=account.fullName)
 
-    +alert-error(3000)
-    +alertChange(3000)
-    form(
-        action = `${prefixAdmin}/accounts/edit/${account.id}?_method=PATCH`
-        id = "form-create-product"
-        method = "POST"
-        style = "margin-left: 200px"
-        enctype="multipart/form-data"
-    )
-        div(class="form-group")
-            label(for="fullName") Họ và tên:
-            input(type="text" name="fullName" id="fullName" class="form-control" style = "width: 70%" required value=account.fullName)
+            div(class="form-group")
+                label(for="email") Email:
+                input(type="email" name="email" id="email" class="form-control" style = "width: 70%" required value=account.email)
 
-        div(class="form-group")
-            label(for="email") Email:
-            input(type="email" name="email" id="email" class="form-control" style = "width: 70%" required value=account.email)
-
-        div(class="form-group")
-            label(for="password") Password:
-            input(type="password" name="password" id="password" class="form-control" style = "width: 70%")
-       
-        div(class="form-group")
-            label(for="phone") Phone:
-            input(type="number" name="phone" id="phone" class="form-control" style = "width: 70%" value=account.phone)
+            div(class="form-group")
+                label(for="password") Password:
+                input(type="password" name="password" id="password" class="form-control" style = "width: 70%")
         
-                
-        div(class="form-group create-upload-image" create-upload-image)
-            label(for="avatar") Hình ảnh:
-            input(
-                type="file" 
-                name="avatar" 
-                id="avatar" 
-                class="form-control-file" 
-                acceopt = "image/*" 
-                style = "width: 70%; cursor: pointer;"
-                input-upload-image
-            )
-            img(
-                src=account.avatar
-                input-upload-preview
-                class = "preview"
-            )
-            button(class="button-preview" button-preview type="") x
-        
+            div(class="form-group")
+                label(for="phone") Phone:
+                input(type="number" name="phone" id="phone" class="form-control" style = "width: 70%" value=account.phone)
+            
+                    
+            div(class="form-group create-upload-image" create-upload-image)
+                label(for="avatar") Hình ảnh:
+                input(
+                    type="file" 
+                    name="avatar" 
+                    id="avatar" 
+                    class="form-control-file" 
+                    acceopt = "image/*" 
+                    style = "width: 70%; cursor: pointer;"
+                    input-upload-image
+                )
+                img(
+                    src=account.avatar
+                    input-upload-preview
+                    class = "preview"
+                )
+                button(class="button-preview" button-preview type="") x
+            
 
-        div(class="form-group")
-            label(for="role_id") Phân Quyền:
-            select(name="role_id" class="form-control" style = "width: 70%")
-                option(value="" default) -- Chọn danh mục --   
-                each item in role
-                    option(value=item.id selected = (item.id === account.role_id)) #{item.title}
+            div(class="form-group")
+                label(for="role_id") Phân Quyền:
+                select(name="role_id" class="form-control" style = "width: 70%")
+                    option(value="" default) -- Chọn danh mục --   
+                    each item in role
+                        option(value=item.id selected = (item.id === account.role_id)) #{item.title}
 
-        div(class="form-group" style="display: flex")
-            div(style="display: flex; align-items: center; margin-right: 10px;")
-                input(type="radio" name="status" id="active" style="margin-right: 10px; width: 20px; height: 20px;" value="active" checked = account.status == "active" ? true : false)
-                lable(for="active" class="") Đang hoạt động
-            div(style="display: flex; align-items: center;")
-                input(type="radio" name="status" id="inactive" style="margin-right: 10px; width: 20px; height: 20px;" value="inactive" checked = account.status == "inactive" ? true  : false)
-                lable(for="inactive" class="") Dừng hoạt động
-        button(class="btn btn-primary" style="margin-bottom: 20px;") Áp dụng
-    script(src="/admin/js/account.js")
+            div(class="form-group" style="display: flex")
+                div(style="display: flex; align-items: center; margin-right: 10px;")
+                    input(type="radio" name="status" id="active" style="margin-right: 10px; width: 20px; height: 20px;" value="active" checked = account.status == "active" ? true : false)
+                    lable(for="active" class="") Đang hoạt động
+                div(style="display: flex; align-items: center;")
+                    input(type="radio" name="status" id="inactive" style="margin-right: 10px; width: 20px; height: 20px;" value="inactive" checked = account.status == "inactive" ? true  : false)
+                    lable(for="inactive" class="") Dừng hoạt động
+            button(class="btn btn-primary" style="margin-bottom: 20px;") Áp dụng
+        script(src="/admin/js/account.js")
