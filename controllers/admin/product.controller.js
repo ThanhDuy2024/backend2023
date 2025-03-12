@@ -5,6 +5,7 @@ const objectSearch = require("../../helpers/search");
 const objectPaginationHelper = require("../../helpers/pagination");
 const prefixAdmin = require("../../config/system");
 const createTree = require("../../helpers/createTree");
+const Account = require("../../models/account.model");
 //[GET] /admin/products
 module.exports.index = async (req, res) => {
    
@@ -51,7 +52,14 @@ module.exports.index = async (req, res) => {
                     .sort(sortItem)
                     .limit(objectPagination.limit)
                     .skip(objectPagination.skip);
-   
+
+    for(const product of products) {
+        const user = await Account.findOne({_id: product.createdBy.account_id});
+        if(user){
+            product.accountFullName = user.fullName
+        }
+    }
+    //Chỉ có for Of với map mới thay đổi được 1 object 
     res.render("admin/pages/product/index", {
         pageTitle: "Dashboard page",
         products: products,
@@ -136,6 +144,9 @@ module.exports.createItem = async (req, res) => {
        req.body.position = parseInt(req.body.position);
     }
 
+    req.body.createdBy = {
+        account_id: res.locals.user.id
+    }
     const product = new Product(req.body);
     await product.save();
     req.flash('success', `Sản phẩm đã được thêm`);

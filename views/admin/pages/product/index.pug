@@ -66,6 +66,8 @@ block main
             th Giá
             th Vị trí
             th Trạng thái
+            th Người tạo
+            th Thời gian
             th Hành động
         tbody
           each item, index in products
@@ -107,6 +109,8 @@ block main
                       button-change-status 
                       data-id = item.id 
                       ) Dừng hoạt động
+              td #{item.accountFullName}
+              td #{item.createdBy.created}
               td
                 button.detail 
                   a(class="detail" href=`${prefixAdmin}/product/detail/${item.id}` style="color: white;") Chi tiết

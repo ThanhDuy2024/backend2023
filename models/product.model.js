@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const slug = require('mongoose-slug-updater');
+const Account = require("./account.model");
 mongoose.plugin(slug);
 const productSchema = new mongoose.Schema(
     {
@@ -17,6 +18,14 @@ const productSchema = new mongoose.Schema(
         discountedTotal: Number,
         discountPercent: Number,
         stock: Number,
+        createdBy: {
+            account_id: String,
+            fullName: String,
+            created: {
+                type: String,
+                default: Date.now
+            }
+        },
         deleted: {
             type: Boolean,
             default: false
