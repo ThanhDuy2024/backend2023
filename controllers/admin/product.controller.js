@@ -93,7 +93,7 @@ module.exports.changeAll = async (req, res) => {
                 req.flash('success', ` ${id.length} sản phẩm đã được cập nhật`);
                 break;
             case "delete-all":
-                await Product.updateMany({"_id": id}, {"$set":{"deleted": true, "deleteAt": new Date()}})
+                await Product.updateMany({"_id": id}, {"$set":{"deleted": true, "deletedBy": {"account_id": res.locals.user.id, "deleteAt": new Date()}}})
                 req.flash('success', ` ${id.length} sản phẩm đã được xóa`);
                 break;
             case "change-position":
@@ -118,8 +118,11 @@ module.exports.deleteItem = async (req, res) => {
         await Product.updateOne(
             { _id: id}, 
             {
-                deleted: true,
-                deleteAt: new Date()
+                deletedBy: {
+                    account_id: res.locals.user.id,
+                    deleteAt: new Date()
+                },
+                deleted: true
             },
         );
     }

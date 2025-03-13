@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const moment = require('moment')
 require("dotenv").config();
 
 const database = require("./config/database");
@@ -28,6 +29,8 @@ database.connect();
 route(app);
 routeAdmin(app);
 app.locals.prefixAdmin = adminUrl.prefixAdmin;
+
+app.locals.moment = moment
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

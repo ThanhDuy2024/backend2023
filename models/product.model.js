@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const slug = require('mongoose-slug-updater');
 const Account = require("./account.model");
+const { accounts } = require("../validates/admin/product.validates");
 mongoose.plugin(slug);
 const productSchema = new mongoose.Schema(
     {
@@ -22,9 +23,13 @@ const productSchema = new mongoose.Schema(
             account_id: String,
             fullName: String,
             created: {
-                type: String,
+                type: Date,
                 default: Date.now
             }
+        },
+        deletedBy: {
+            account_id: String,
+            deleteAt: Date
         },
         deleted: {
             type: Boolean,
@@ -38,7 +43,6 @@ const productSchema = new mongoose.Schema(
         status: String,
         position: Number,
         thumbnail: String,
-        deleteAt: Date
     },
     {
         timestamps: true
